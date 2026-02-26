@@ -1,6 +1,7 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Player : MonoBehaviour
 {
@@ -10,6 +11,9 @@ public class Player : MonoBehaviour
     public Transform attackPoint;
     int coins;
 
+    public AudioSource audioSource;
+    public AudioClip damageSound;
+
     void Update()
     {
         if (Input.GetMouseButtonDown(0))
@@ -17,11 +21,23 @@ public class Player : MonoBehaviour
             Instantiate(fireballPrefab, attackPoint.position, attackPoint.rotation);
         }
     }
-    // Ìåòîä, ïîíèæàþùèé çäîðîâüå
+    // ÐœÐµÑ‚Ð¾Ð´, Ð¿Ð¾Ð½Ð¸Ð¶Ð°ÑŽÑ‰Ð¸Ð¹ Ð·Ð´Ð¾Ñ€Ð¾Ð²ÑŒÐµ
     public void TakeDamage(int damage)
     {
+        print("Ð—Ð´Ð¾Ñ€Ð¾Ð²ÑŒÐµ Ð¸Ð³Ñ€Ð¾ÐºÐ°" + health);
         health -= damage;
-        print("Çäîðîâüå èãðîêà" + health);
+        if (health > 0)
+        {
+            print("Ð—Ð´Ð¾Ñ€Ð¾Ð²ÑŒÐµ Ð¸Ð³Ñ€Ð¾ÐºÐ°" + health);
+            audioSource.PlayOneShot(damageSound);
+        }
+        else
+        {
+            int sceneIndex = SceneManager.GetActiveScene().buildIndex;
+            SceneManager.LoadScene(sceneIndex);
+        }
+
+        
     }
 
     public void CollectCoins()

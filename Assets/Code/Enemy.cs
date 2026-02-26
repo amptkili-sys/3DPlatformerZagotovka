@@ -1,4 +1,4 @@
-using System.Collections;
+п»їusing System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -10,16 +10,19 @@ public class Enemy : MonoBehaviour
 
     void Update()
     {
-        //Меняет каждый кадр позицию NPC на новую
+        //РњРµРЅСЏРµС‚ РєР°Р¶РґС‹Р№ РєР°РґСЂ РїРѕР·РёС†РёСЋ NPC РЅР° РЅРѕРІСѓСЋ
         transform.position = Vector3.MoveTowards(transform.position, target.position, speed * Time.deltaTime);
-        //Разворачивает каждый кадр NPC лицом к цели
+        //Р Р°Р·РІРѕСЂР°С‡РёРІР°РµС‚ РєР°Р¶РґС‹Р№ РєР°РґСЂ NPC Р»РёС†РѕРј Рє С†РµР»Рё
         transform.LookAt(target.position);
     }
 
-    //При столкновении врага с игроком второму наносится урон
+    //РџСЂРё СЃС‚РѕР»РєРЅРѕРІРµРЅРёРё РІСЂР°РіР° СЃ РёРіСЂРѕРєРѕРј РІС‚РѕСЂРѕРјСѓ РЅР°РЅРѕСЃРёС‚СЃСЏ СѓСЂРѕРЅ
     private void OnTriggerEnter(Collider other)
     {
-        Player player = other.GetComponent<Player>();
-        player.TakeDamage(playerDamage);
+        if (other.GetComponent<Player>() != null)
+        {
+            Player player = other.GetComponent<Player>();
+            player.TakeDamage(playerDamage);
+        }
     }
 }
