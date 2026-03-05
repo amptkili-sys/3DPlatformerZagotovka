@@ -5,44 +5,60 @@ using UnityEngine.SceneManagement;
 
 public class Player : MonoBehaviour
 {
-    private int health = 10;
+    //Текущее здоровье игрока
+    public int health = 10;
+    //Максимальное здоровье игрока
+    public int maxHealth = 10;
 
+    //Число собранных монет
+    public int coins;
+
+    //Префаб огненного шара и параметр Transform точки атаки
     public GameObject fireballPrefab;
     public Transform attackPoint;
-    int coins;
 
+    //Компонент, отвечающий за проигрывание звуков
     public AudioSource audioSource;
+
+    //Звуковой файл, содержащий звуковой эффект нанесения урона
     public AudioClip damageSound;
 
-    void Update()
-    {
-        if (Input.GetMouseButtonDown(0))
-        {
-            Instantiate(fireballPrefab, attackPoint.position, attackPoint.rotation);
-        }
-    }
-    // Метод, понижающий здоровье
+    //Метод, обрабатывающий нанесённый урон
     public void TakeDamage(int damage)
     {
-        print("Здоровье игрока" + health);
         health -= damage;
+
+        //Если здоровье ещё есть, то проигрывается звук нанесения урона
         if (health > 0)
         {
-            print("Здоровье игрока" + health);
             audioSource.PlayOneShot(damageSound);
+            //print("Здоровье игрока: " + health);
         }
+        //Если здоровья нет, то перезапускается текущая сцена
         else
         {
             int sceneIndex = SceneManager.GetActiveScene().buildIndex;
             SceneManager.LoadScene(sceneIndex);
         }
-
-        
     }
 
+    //Метод, увеличивающий число монеток
     public void CollectCoins()
     {
         coins++;
-        Debug.Log("Coins: " + coins);
+        //print("Собранные монетки: " + coins);
+    }
+
+
+    void Update()
+    {
+
+        //Если игрок кликает левой кнопкой мыши, то создаётся огненный шар
+        if (Input.GetMouseButtonDown(0))
+        {
+            Instantiate(fireballPrefab, attackPoint.position, attackPoint.rotation);
+        }
+
     }
 }
+
