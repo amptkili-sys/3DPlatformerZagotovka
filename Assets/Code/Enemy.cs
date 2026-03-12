@@ -19,10 +19,10 @@ public class Enemy : MonoBehaviour
     //При столкновении врага с игроком второму наносится урон
     private void OnTriggerEnter(Collider other)
     {
-        if (other.GetComponent<Player>() != null)
+        if (other.GetComponent<Health>() != null)
         {
-            Player player = other.GetComponent<Player>();
-            player.TakeDamage(playerDamage);
+            Health playerHealth = other.GetComponent<Health>();
+            playerHealth.TakeDamage(playerDamage);
         }
     }
 }
